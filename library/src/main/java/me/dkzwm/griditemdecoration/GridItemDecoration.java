@@ -105,6 +105,8 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
                 continue;
             List<SafeCycleObserver.GridItemRelationship> relationships = mObserver.getRelationships();
             SafeCycleObserver.GridItemRelationship item = relationships.get(position);
+            if (item.row < 0)
+                continue;
             Drawable verticalDrawable = mProvider.createVertical(parent, item.row);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();
