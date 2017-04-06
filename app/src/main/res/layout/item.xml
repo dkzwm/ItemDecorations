@@ -1,0 +1,9 @@
+<TextView
+    android:id="@+id/textView_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/colorDeepSkyBlue"
+    android:gravity="center"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="@color/colorBlackPrimary"/>

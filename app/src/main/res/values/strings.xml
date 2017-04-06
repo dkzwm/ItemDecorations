@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GridItemDecorationSample</string>
+    <string name="change_span_size">Change spanSize</string>
+</resources>
