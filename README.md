@@ -4,10 +4,10 @@ ItemDecorations is a dividers library for RecyclerView which use GridLayoutManag
 <p/>
 
 ## Features
- 1.supports cross-column when the RecyclerView used GridLayoutManager
- 2.supports horizontal orientation and vertical orientation
- 3.supports reversed layout
- 4.supports draw the divider inside each of item
+ 1.supports cross-column when the RecyclerView used GridLayoutManager＜/br＞
+ 2.supports horizontal orientation and vertical orientation＜/br＞
+ 3.supports reversed layout＜/br＞
+ 4.supports draw the divider inside each of item＜/br＞
 
 ## How to use
  please see the sample application
@@ -16,6 +16,8 @@ ItemDecorations is a dividers library for RecyclerView which use GridLayoutManag
 <p align="center">
 <img src="snapshot1.png" alt="Drawing" width="280" />
 <img src="snapshot2.png" alt="Drawing" width="280" />
+<p/>
+<p align="center">
 <img src="snapshot3.png" alt="Drawing" width="280" />
 <img src="snapshot4.png" alt="Drawing" width="280" />
 <p/>
