@@ -1,5 +1,7 @@
-package me.dkzwm.griditemdecorationsample;
+package me.dkzwm.itemdecorationsample;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,14 +34,23 @@ public class NumberedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item, parent, false);
+        int layoutResId = R.layout.item_one;
+        RecyclerView.LayoutManager layoutManager = ((RecyclerView) parent).getLayoutManager();
+        if (layoutManager instanceof LinearLayoutManager) {
+            LinearLayoutManager manager = (LinearLayoutManager) layoutManager;
+            if (manager.getOrientation() == OrientationHelper.HORIZONTAL) {
+                layoutResId = R.layout.item_two;
+            }
+        }
+        View view = mInflater.inflate(layoutResId, parent, false);
         return new TextViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof TextViewHolder)
+        if (holder instanceof TextViewHolder) {
             ((TextViewHolder) holder).setData(mLabels.get(position));
+        }
     }
 
     @Override

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "me.dkzwm.griditemdecorationsample"
+        applicationId "me.dkzwm.itemdecorationsample"
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 1
