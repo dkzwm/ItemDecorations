@@ -123,8 +123,8 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             GridItemRelationship relationship = mRelationships.get(position);
             if (relationship == null)
                 continue;
-            int transitionX = (int) ViewCompat.getTranslationX(view);
-            int transitionY = (int) ViewCompat.getTranslationY(view);
+            int transitionX = Math.round(ViewCompat.getTranslationX(view));
+            int transitionY = Math.round(ViewCompat.getTranslationY(view));
             boolean drawColumn = isColumnNeedDraw(relationship, true, manager.getReverseLayout(),
                     spanCount);
             boolean drawRow = isRowNeedDraw(relationship, true, manager.getReverseLayout(),
@@ -251,8 +251,8 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             GridItemRelationship relationship = mRelationships.get(position);
             if (relationship == null)
                 continue;
-            int transitionX = (int) ViewCompat.getTranslationX(view);
-            int transitionY = (int) ViewCompat.getTranslationY(view);
+            int transitionX = Math.round(ViewCompat.getTranslationX(view));
+            int transitionY = Math.round(ViewCompat.getTranslationY(view));
             boolean drawColumn = isColumnNeedDraw(relationship, false, manager.getReverseLayout(),
                     spanCount);
             boolean drawRow = isRowNeedDraw(relationship, false, manager.getReverseLayout(),

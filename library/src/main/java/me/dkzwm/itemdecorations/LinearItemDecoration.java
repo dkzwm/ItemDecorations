@@ -80,8 +80,8 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
             int position = lp.getViewAdapterPosition();
             if (position < 0 || !mProvider.isDividerNeedDraw(position))
                 continue;
-            int transitionX = (int) ViewCompat.getTranslationX(view);
-            int transitionY = (int) ViewCompat.getTranslationY(view);
+            int transitionX = Math.round(ViewCompat.getTranslationX(view));
+            int transitionY = Math.round(ViewCompat.getTranslationY(view));
             left = view.getLeft() - lp.leftMargin + transitionX + mProvider.marginStart(position);
             right = view.getRight() + lp.rightMargin + transitionX - mProvider.marginEnd(position);
             IDivider divider = mProvider.createDivider(position);
@@ -128,8 +128,8 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
             int position = lp.getViewAdapterPosition();
             if (position < 0 || !mProvider.isDividerNeedDraw(position))
                 continue;
-            int transitionX = (int) ViewCompat.getTranslationX(view);
-            int transitionY = (int) ViewCompat.getTranslationY(view);
+            int transitionX = Math.round(ViewCompat.getTranslationX(view));
+            int transitionY = Math.round(ViewCompat.getTranslationY(view));
             top = view.getTop() - lp.topMargin + transitionY + mProvider.marginStart(position);
             bottom = view.getBottom() + lp.bottomMargin + transitionY - mProvider.marginEnd(position);
             IDivider divider = mProvider.createDivider(position);
