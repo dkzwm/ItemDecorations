@@ -10,8 +10,19 @@ ItemDecorations is a dividers library for RecyclerView which use GridLayoutManag
  4.supports draw the divider inside each of item  
 
 ## How to use
- please see the sample application
-  
+ please see the sample application  
+ 
+## Gradle
+```groovy
+repositories {  
+	...
+	maven { url 'https://jitpack.io' }  
+}
+
+dependencies {
+    compile 'com.github.dkzwm:ItemDecorations:1.0.0'
+}
+``` 
 ## Snapshot
 <p>
 <img src="snapshot1.png" alt="Drawing" width="280" />
