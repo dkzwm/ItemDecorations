@@ -13,7 +13,6 @@ import android.view.View;
 import me.dkzwm.itemdecorations.divider.IDivider;
 import me.dkzwm.itemdecorations.provider.DefaultLinearProvider;
 import me.dkzwm.itemdecorations.provider.ILinearProvider;
-import me.dkzwm.itemdecorations.provider.LinearProvider;
 
 /**
  * Created by dkzwm on 2017/4/13.
@@ -166,23 +165,10 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
     }
 
 
-    public static class Builder extends BaseBuilder<ILinearProvider>
-            implements IDecorationBuilder<Builder, LinearProvider, LinearItemDecoration> {
+    public static class Builder extends BaseBuilder<ILinearProvider, LinearItemDecoration> {
 
         public Builder(@NonNull Context context) {
             super(context);
-        }
-
-        @Override
-        public Builder drawInsideEachOfItem(boolean drawInsideEachOfItem) {
-            mDrawInsideEachOfItem = drawInsideEachOfItem;
-            return this;
-        }
-
-        @Override
-        public Builder provider(LinearProvider provider) {
-            mProvider = provider;
-            return this;
         }
 
         @Override

@@ -14,30 +14,32 @@ import android.view.View;
 import me.dkzwm.itemdecorations.provider.IProvider;
 
 /**
+ * The base ItemDecoration
  * Created by dkzwm on 2017/4/11.
  *
  * @author dkzwm
  */
-
 abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.ItemDecoration {
     T mProvider;
     boolean mDrawInsideEachOfItem;
+    private boolean mDrawOverTop;
 
-    BaseItemDecoration(BaseBuilder<T> builder) {
+    BaseItemDecoration(BaseBuilder<T, ?> builder) {
         mProvider = builder.mProvider;
+        mDrawOverTop = builder.mDrawOverTop;
         mDrawInsideEachOfItem = builder.mDrawInsideEachOfItem;
     }
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        if (!mDrawInsideEachOfItem) {
+        if (!mDrawOverTop) {
             draw(c, parent);
         }
     }
 
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        if (mDrawInsideEachOfItem) {
+        if (mDrawOverTop) {
             draw(c, parent);
         }
     }
@@ -100,21 +102,62 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
         mProvider.release();
     }
 
-    interface IDecorationBuilder<S, T, R> {
-        S drawInsideEachOfItem(boolean drawInsideEachOfItem);
+    interface IBuilder<R, S> {
+        /**
+         * Draw the divider over the top
+         *
+         * @param overTop True of false
+         * @return Builder
+         */
+        R drawOverTop(boolean overTop);
 
-        S provider(T provider);
+        /**
+         * Draw the divider inside each of item
+         *
+         * @param drawInsideEachOfItem true or false
+         * @return Builder
+         */
+        R drawInsideEachOfItem(boolean drawInsideEachOfItem);
 
-        R build();
+        /**
+         * Set the divider provider
+         *
+         * @param provider Custom divider provider , can not be null
+         * @return Builder
+         */
+        R provider(@NonNull S provider);
+
     }
 
-    static class BaseBuilder<T extends IProvider> {
+    public abstract static class BaseBuilder<T, S> implements IBuilder<BaseBuilder, T> {
         Context mContext;
         T mProvider;
-        boolean mDrawInsideEachOfItem;
+        boolean mDrawInsideEachOfItem = false;
+        boolean mDrawOverTop = false;
 
         BaseBuilder(@NonNull Context context) {
             mContext = context;
         }
+
+        @Override
+        public BaseBuilder<T, S> drawOverTop(boolean drawOverTop) {
+            mDrawOverTop = drawOverTop;
+            return this;
+        }
+
+        @Override
+        public BaseBuilder<T, S> drawInsideEachOfItem(boolean drawInsideEachOfItem) {
+            mDrawInsideEachOfItem = drawInsideEachOfItem;
+            return this;
+        }
+
+        @Override
+        public BaseBuilder<T, S> provider(@NonNull T provider) {
+            mProvider = provider;
+            return this;
+        }
+
+        abstract public S build();
+
     }
 }

@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return 0;
             }
-        }).drawInsideEachOfItem(false).build();
+        }).drawInsideEachOfItem(true).build();
         mGridLayoutManager = new GridLayoutManager(this, 4);
         mGridLayoutManager.setOrientation(OrientationHelper.VERTICAL);
         mGridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

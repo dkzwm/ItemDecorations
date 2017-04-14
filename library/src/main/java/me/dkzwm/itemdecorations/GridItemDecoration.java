@@ -13,7 +13,6 @@ import android.view.View;
 
 import me.dkzwm.itemdecorations.divider.IDivider;
 import me.dkzwm.itemdecorations.provider.DefaultGridProvider;
-import me.dkzwm.itemdecorations.provider.GridProvider;
 import me.dkzwm.itemdecorations.provider.IGridProvider;
 
 
@@ -470,23 +469,10 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
         int totalSpanSize;
     }
 
-    public static class Builder extends BaseBuilder<IGridProvider>
-            implements IDecorationBuilder<Builder, GridProvider, GridItemDecoration> {
+    public static class Builder extends BaseBuilder<IGridProvider, GridItemDecoration> {
 
         public Builder(@NonNull Context context) {
             super(context);
-        }
-
-        @Override
-        public Builder drawInsideEachOfItem(boolean drawInsideEachOfItem) {
-            mDrawInsideEachOfItem = drawInsideEachOfItem;
-            return this;
-        }
-
-        @Override
-        public Builder provider(GridProvider provider) {
-            mProvider = provider;
-            return this;
         }
 
         @Override
@@ -496,5 +482,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             }
             return new GridItemDecoration(this);
         }
+
+
     }
 }
