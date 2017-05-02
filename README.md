@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {  
-    compile 'com.github.dkzwm:ItemDecorations:v1.0.0'
+    compile 'com.github.dkzwm:ItemDecorations:v1.0.1’
 }
 ``` 
 ## Snapshot
