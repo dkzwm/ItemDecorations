@@ -16,11 +16,11 @@ ItemDecorations is a dividers library for RecyclerView which use GridLayoutManag
 ## Gradle
 ```groovy
 repositories {  
-	...
-	maven { url 'https://jitpack.io' }  
+    ...
+    maven { url 'https://jitpack.io' }  
 }
 
-dependencies {
+dependencies {  
     compile 'com.github.dkzwm:ItemDecorations:v1.0.0'
 }
 ``` 
