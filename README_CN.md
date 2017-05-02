@@ -1,30 +1,31 @@
 # ItemDecorations
-## English | [中文](https://github.com/dkzwm/ItemDecorations/blob/master/README_CN.md)
+## [English](https://github.com/dkzwm/ItemDecorations/blob/master/README.md) | 中文
+
 <p>
-ItemDecorations is a dividers library for RecyclerView which use GridLayoutManager or LinearLayoutManager
+ItemDecorations是RecyclerView的分隔线库，现阶段支持使用GridLayoutManager或LinearLayoutManager的布局管理器
 <p/>
 
-## Features
- 1.supports cross-column when the RecyclerView used GridLayoutManager  
- 2.supports horizontal orientation and vertical orientation  
- 3.supports reversed layout  
- 4.supports draw the divider inside each of item  
+## 特性
+ 1.当使用GridLayoutManager时，支持跨列特性(SpanLookup)  
+ 2.支持横向和纵向布局  
+ 3.支持倒序(Reversed)
+ 4.支持分割线画在每个视图内部  
 
-## How to use
- please see the sample application  
+## 如何使用
+ 请参照示例Demo,使用很简单
  
 ## Gradle
 ```groovy
 repositories {  
-	...
-	maven { url 'https://jitpack.io' }  
+    ...
+    maven { url 'https://jitpack.io' }  
 }
 
-dependencies {
+dependencies {  
     compile 'com.github.dkzwm:ItemDecorations:v1.0.0'
 }
 ``` 
-## Snapshot
+## 预览图
 <p>
 <img src="snapshot1.png" alt="Drawing" width="280" />
 <img src="snapshot2.png" alt="Drawing" width="280" />
