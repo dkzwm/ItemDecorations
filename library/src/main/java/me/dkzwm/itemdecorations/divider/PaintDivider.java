@@ -17,7 +17,7 @@ public class PaintDivider implements IDivider {
     }
 
     @Override
-    public void draw(Canvas canvas, int left, int top, int right, int bottom) {
+    public void draw(Canvas canvas, float left, float top, float right, float bottom) {
         canvas.drawLine(left, top, right, bottom, mPaint);
     }
 

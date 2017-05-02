@@ -123,13 +123,13 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             GridItemRelationship relationship = mRelationships.get(position);
             if (relationship == null)
                 continue;
-            int transitionX = Math.round(ViewCompat.getTranslationX(view));
-            int transitionY = Math.round(ViewCompat.getTranslationY(view));
+            float transitionX = ViewCompat.getTranslationX(view);
+            float transitionY = ViewCompat.getTranslationY(view);
             boolean drawColumn = isColumnNeedDraw(relationship, true, manager.getReverseLayout(),
                     spanCount);
             boolean drawRow = isRowNeedDraw(relationship, true, manager.getReverseLayout(),
                     spanCount);
-            int left, top, right, bottom;
+            float left, top, right, bottom;
             if (drawColumn) {
                 top = view.getTop() - lp.topMargin + transitionY;
                 bottom = view.getBottom() + lp.bottomMargin + transitionY;
@@ -140,7 +140,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         right = left + columnDivider.getDividerSize();
                     } else {
                         left = view.getRight() + lp.rightMargin + transitionX
-                                + Math.round(columnDivider.getDividerSize() / 2f);
+                                + columnDivider.getDividerSize() / 2f;
                         right = left;
                     }
                     if (mDrawInsideEachOfItem) {
@@ -160,7 +160,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                             top = bottom;
                             bottom = top + rowDivider.getDividerSize();
                         } else {
-                            top = bottom + Math.round(rowDivider.getDividerSize() / 2f);
+                            top = bottom + rowDivider.getDividerSize() / 2f;
                             bottom = top;
                         }
                         rowDivider.draw(c, left, top, right, bottom);
@@ -192,7 +192,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                             bottom = top;
                             top = top - rowDivider.getDividerSize();
                         } else {
-                            top = top - Math.round(rowDivider.getDividerSize() / 2f);
+                            top = top - rowDivider.getDividerSize() / 2f;
                             bottom = top;
                         }
                         rowDivider.draw(c, left, top, right, bottom);
@@ -209,7 +209,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         bottom = top + rowDivider.getDividerSize();
                     } else {
                         bottom = view.getBottom() + lp.bottomMargin + transitionY
-                                + Math.round(rowDivider.getDividerSize() / 2f);
+                                + rowDivider.getDividerSize() / 2f;
                         top = bottom;
                     }
                     if (mDrawInsideEachOfItem) {
@@ -222,7 +222,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         top = bottom - rowDivider.getDividerSize();
                     } else {
                         bottom = view.getTop() - lp.topMargin + transitionY
-                                - Math.round(rowDivider.getDividerSize() / 2f);
+                                - rowDivider.getDividerSize() / 2f;
                         top = bottom;
                     }
                     if (mDrawInsideEachOfItem) {
@@ -251,13 +251,13 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             GridItemRelationship relationship = mRelationships.get(position);
             if (relationship == null)
                 continue;
-            int transitionX = Math.round(ViewCompat.getTranslationX(view));
-            int transitionY = Math.round(ViewCompat.getTranslationY(view));
+            float transitionX = ViewCompat.getTranslationX(view);
+            float transitionY = ViewCompat.getTranslationY(view);
             boolean drawColumn = isColumnNeedDraw(relationship, false, manager.getReverseLayout(),
                     spanCount);
             boolean drawRow = isRowNeedDraw(relationship, false, manager.getReverseLayout(),
                     spanCount);
-            int left, top, right, bottom;
+            float left, top, right, bottom;
             if (drawColumn) {
                 IDivider columnDivider = createColumnDivider(relationship, false,
                         manager.getReverseLayout());
@@ -269,7 +269,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         right = left + columnDivider.getDividerSize();
                     } else {
                         left = view.getRight() + lp.rightMargin + transitionX
-                                + Math.round(columnDivider.getDividerSize() / 2f);
+                                + columnDivider.getDividerSize() / 2f;
                         right = left;
                     }
                     if (mDrawInsideEachOfItem) {
@@ -282,7 +282,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         right = left - columnDivider.getDividerSize();
                     } else {
                         left = view.getLeft() - lp.leftMargin + transitionX
-                                - Math.round(columnDivider.getDividerSize() / 2f);
+                                - columnDivider.getDividerSize() / 2f;
                         right = left;
                     }
                     if (mDrawInsideEachOfItem) {
@@ -303,7 +303,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         bottom = top + rowDivider.getDividerSize();
                     } else {
                         bottom = view.getBottom() + lp.bottomMargin + transitionY
-                                + Math.round(rowDivider.getDividerSize() / 2f);
+                                + rowDivider.getDividerSize() / 2f;
                         top = bottom;
                     }
                     if (mDrawInsideEachOfItem) {
@@ -323,7 +323,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                             left = right;
                             right = left + columnDivider.getDividerSize();
                         } else {
-                            left = right + Math.round(columnDivider.getDividerSize() / 2f);
+                            left = right + columnDivider.getDividerSize() / 2f;
                             right = left;
                         }
                         columnDivider.draw(c, left, top, right, bottom);
@@ -334,7 +334,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         bottom = top - rowDivider.getDividerSize();
                     } else {
                         bottom = view.getTop() - lp.topMargin + transitionY
-                                - Math.round(rowDivider.getDividerSize() / 2f);
+                                - rowDivider.getDividerSize() / 2f;
                         top = bottom;
                     }
                     if (mDrawInsideEachOfItem) {
@@ -355,7 +355,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                             left = left - columnDivider.getDividerSize();
                             columnDivider.draw(c, left, top, right, bottom);
                         } else {
-                            left = left - Math.round(columnDivider.getDividerSize() / 2f);
+                            left = left - columnDivider.getDividerSize() / 2f;
                             right = left;
                             columnDivider.draw(c, left, top, right, bottom);
                         }

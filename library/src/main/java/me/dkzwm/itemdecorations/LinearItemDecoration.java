@@ -73,15 +73,15 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
                                          RecyclerView.LayoutManager layoutManager) {
         LinearLayoutManager manager = (LinearLayoutManager) layoutManager;
         int childCount = parent.getChildCount();
-        int left, top, right, bottom;
+        float left, top, right, bottom;
         for (int i = 0; i < childCount; i++) {
             View view = parent.getChildAt(i);
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) view.getLayoutParams();
             int position = lp.getViewAdapterPosition();
             if (position < 0 || !mProvider.isDividerNeedDraw(position))
                 continue;
-            int transitionX = Math.round(ViewCompat.getTranslationX(view));
-            int transitionY = Math.round(ViewCompat.getTranslationY(view));
+            float transitionX = ViewCompat.getTranslationX(view);
+            float transitionY = ViewCompat.getTranslationY(view);
             left = view.getLeft() - lp.leftMargin + transitionX + mProvider.marginStart(position);
             right = view.getRight() + lp.rightMargin + transitionX - mProvider.marginEnd(position);
             IDivider divider = mProvider.createDivider(position);
@@ -90,8 +90,7 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
                     bottom = view.getTop() - lp.topMargin + transitionY;
                     top = bottom - divider.getDividerSize();
                 } else {
-                    top = view.getTop() - lp.topMargin -
-                            (Math.round(divider.getDividerSize() / 2f)) + transitionY;
+                    top = view.getTop() - lp.topMargin - divider.getDividerSize() / 2f + transitionY;
                     bottom = top;
                 }
                 if (mDrawInsideEachOfItem) {
@@ -103,8 +102,7 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
                     top = view.getBottom() + lp.bottomMargin + transitionY;
                     bottom = top + divider.getDividerSize();
                 } else {
-                    top = view.getBottom() + lp.bottomMargin +
-                            (Math.round(divider.getDividerSize() / 2f)) + transitionY;
+                    top = view.getBottom() + lp.bottomMargin + divider.getDividerSize() / 2f + transitionY;
                     bottom = top;
                 }
                 if (mDrawInsideEachOfItem) {
@@ -121,15 +119,15 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
                                            RecyclerView.LayoutManager layoutManager) {
         LinearLayoutManager manager = (LinearLayoutManager) layoutManager;
         int childCount = parent.getChildCount();
-        int left, top, right, bottom;
+        float left, top, right, bottom;
         for (int i = 0; i < childCount; i++) {
             View view = parent.getChildAt(i);
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) view.getLayoutParams();
             int position = lp.getViewAdapterPosition();
             if (position < 0 || !mProvider.isDividerNeedDraw(position))
                 continue;
-            int transitionX = Math.round(ViewCompat.getTranslationX(view));
-            int transitionY = Math.round(ViewCompat.getTranslationY(view));
+            float transitionX = ViewCompat.getTranslationX(view);
+            float transitionY = ViewCompat.getTranslationY(view);
             top = view.getTop() - lp.topMargin + transitionY + mProvider.marginStart(position);
             bottom = view.getBottom() + lp.bottomMargin + transitionY - mProvider.marginEnd(position);
             IDivider divider = mProvider.createDivider(position);
@@ -138,8 +136,7 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
                     right = view.getLeft() - lp.leftMargin + transitionX;
                     left = right - divider.getDividerSize();
                 } else {
-                    left = view.getLeft() - lp.leftMargin -
-                            (Math.round(divider.getDividerSize() / 2f)) + transitionY;
+                    left = view.getLeft() - lp.leftMargin - divider.getDividerSize() / 2f + transitionY;
                     right = left;
                 }
                 if (mDrawInsideEachOfItem) {
@@ -151,8 +148,7 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
                     left = view.getRight() + lp.rightMargin + transitionX;
                     right = left + divider.getDividerSize();
                 } else {
-                    left = view.getRight() + lp.rightMargin +
-                            (Math.round(divider.getDividerSize() / 2f)) + transitionX;
+                    left = view.getRight() + lp.rightMargin + divider.getDividerSize() / 2f + transitionX;
                     right = left;
                 }
                 if (mDrawInsideEachOfItem) {

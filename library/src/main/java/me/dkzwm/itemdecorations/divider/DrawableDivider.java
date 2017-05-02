@@ -20,8 +20,8 @@ public class DrawableDivider implements IDivider {
     }
 
     @Override
-    public void draw(Canvas canvas, int left, int top, int right, int bottom) {
-        mDrawable.setBounds(left, top, right, bottom);
+    public void draw(Canvas canvas, float left, float top, float right, float bottom) {
+        mDrawable.setBounds(Math.round(left), Math.round(top), Math.round(right), Math.round(bottom));
         mDrawable.draw(canvas);
     }
 

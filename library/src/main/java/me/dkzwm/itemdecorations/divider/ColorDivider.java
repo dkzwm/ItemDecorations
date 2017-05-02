@@ -3,7 +3,6 @@ package me.dkzwm.itemdecorations.divider;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 /**
  * Created by dkzwm on 2017/4/11.
@@ -28,20 +27,14 @@ public class ColorDivider implements IDivider {
 
     public ColorDivider(int color, int size) {
         mColor = color;
-        if (size % 2 == 0)
-            mSize = size;
-        else {
-            Log.w(getClass().getSimpleName(), "divider size should be multiple of 2，Otherwise " +
-                    "there may be gaps");
-            mSize = size + 1;
-        }
+        mSize = size;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(mSize);
         mPaint.setColor(mColor);
     }
 
     @Override
-    public void draw(Canvas canvas, int left, int top, int right, int bottom) {
+    public void draw(Canvas canvas, float left, float top, float right, float bottom) {
         canvas.drawLine(left, top, right, bottom, mPaint);
     }
 

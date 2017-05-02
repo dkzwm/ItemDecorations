@@ -18,7 +18,7 @@ public interface IDivider {
     int TYPE_PAINT = 1;
     int TYPE_DRAWABLE = 2;
 
-    void draw(Canvas canvas, int left, int top, int right, int bottom);
+    void draw(Canvas canvas, float left, float top, float right, float bottom);
 
     @DividerType
     int getType();
