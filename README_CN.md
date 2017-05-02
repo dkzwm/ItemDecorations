@@ -8,7 +8,7 @@ ItemDecorations是RecyclerView的分隔线库，现阶段支持使用GridLayoutM
 ## 特性
  1.当使用GridLayoutManager时，支持跨列特性(SpanLookup)  
  2.支持横向和纵向布局  
- 3.支持倒序(Reversed)
+ 3.支持倒序(Reversed)  
  4.支持分割线画在每个视图内部  
 
 ## 如何使用
