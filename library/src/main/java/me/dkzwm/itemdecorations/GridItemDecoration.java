@@ -8,7 +8,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.View;
 
 import me.dkzwm.itemdecorations.divider.IDivider;
@@ -22,11 +21,9 @@ import me.dkzwm.itemdecorations.provider.IGridProvider;
  * @author dkzwm
  */
 public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
-    private SparseArray<GridItemRelationship> mRelationships;
 
     private GridItemDecoration(Builder builder) {
         super(builder);
-        mRelationships = new SparseArray<>();
     }
 
     @Override
@@ -36,75 +33,69 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             throw new UnsupportedOperationException("GridItemDecoration can only be used in " +
                     "the RecyclerView which use GridLayoutManager");
         }
+        if (mDrawInsideEachOfItem) {
+            rect.set(0, 0, 0, 0);
+            return;
+        }
         GridLayoutManager manager = (GridLayoutManager) layoutManager;
         int spanCount = manager.getSpanCount();
         GridLayoutManager.SpanSizeLookup lookup = manager.getSpanSizeLookup();
-        GridItemRelationship relationship = new GridItemRelationship();
-        int columnSize = 0, rowSize = 0;
+        int columnSize = 0, rowSize = 0, row, column, totalSpanSize;
         if (manager.getOrientation() == OrientationHelper.VERTICAL) {
-            relationship.row = lookup.getSpanGroupIndex(position, spanCount);
-            relationship.column = lookup.getSpanIndex(position, spanCount);
-            relationship.position = position;
-            relationship.totalSpanSize = getTotalSpanSizeByPosition(manager, position);
-            if (!mDrawInsideEachOfItem) {
-                boolean drawColumn;
-                boolean drawRow = isRowNeedDraw(relationship, true, manager.getReverseLayout(),
-                        spanCount);
-                if (drawRow) {
-                    IDivider rowDivider = createRowDivider(relationship, true,
-                            manager.getReverseLayout());
-                    rowSize = rowDivider.getDividerSize();
-                }
-                if (manager.getReverseLayout()) {
-                    drawColumn = isColumnNeedDraw(relationship, true, true, spanCount);
-                    if (drawColumn) {
-                        IDivider columnDivider = createColumnDivider(relationship, true, true);
-                        columnSize = columnDivider.getDividerSize();
-                    }
-                    rect.set(0, 0, columnSize, rowSize);
-                } else {
-                    drawColumn = isColumnNeedDraw(relationship, true, false, spanCount);
-                    if (drawColumn) {
-                        IDivider columnDivider = createColumnDivider(relationship, true, false);
-                        columnSize = columnDivider.getDividerSize();
-                    }
-                    rect.set(columnSize, rowSize, 0, 0);
-                }
+            row = lookup.getSpanGroupIndex(position, spanCount);
+            column = lookup.getSpanIndex(position, spanCount);
+            totalSpanSize = getTotalSpanSizeByPosition(manager, position);
+            boolean drawColumn;
+            boolean drawRow = isRowNeedDraw(row, totalSpanSize, true, manager.getReverseLayout(),
+                    spanCount);
+            if (drawRow) {
+                IDivider rowDivider = createRowDivider(row, true,
+                        manager.getReverseLayout());
+                rowSize = rowDivider.getDividerSize();
             }
-        } else {
-            relationship.row = lookup.getSpanIndex(position, spanCount);
-            relationship.column = lookup.getSpanGroupIndex(position, spanCount);
-            relationship.position = position;
-            relationship.totalSpanSize = getTotalSpanSizeByPosition(manager, position);
-            if (!mDrawInsideEachOfItem) {
-                boolean drawColumn = isColumnNeedDraw(relationship, false, manager.getReverseLayout(),
-                        spanCount);
-                boolean drawRow;
+            if (manager.getReverseLayout()) {
+                drawColumn = isColumnNeedDraw(column, totalSpanSize, true, true, spanCount);
                 if (drawColumn) {
-                    IDivider columnDivider = createColumnDivider(relationship, false,
-                            manager.getReverseLayout());
+                    IDivider columnDivider = createColumnDivider(column, true, true);
                     columnSize = columnDivider.getDividerSize();
                 }
-                if (manager.getReverseLayout()) {
-                    drawRow = isRowNeedDraw(relationship, false, true, spanCount);
-                    if (drawRow) {
-                        IDivider rowDivider = createRowDivider(relationship, false, true);
-                        rowSize = rowDivider.getDividerSize();
-                    }
-                    rect.set(0, 0, columnSize, rowSize);
-                } else {
-                    drawRow = isRowNeedDraw(relationship, false, false, spanCount);
-                    if (drawRow) {
-                        IDivider rowDivider = createRowDivider(relationship, false, false);
-                        rowSize = rowDivider.getDividerSize();
-                    }
-                    rect.set(columnSize, rowSize, 0, 0);
+                rect.set(0, 0, columnSize, rowSize);
+            } else {
+                drawColumn = isColumnNeedDraw(column, totalSpanSize, true, false, spanCount);
+                if (drawColumn) {
+                    IDivider columnDivider = createColumnDivider(column, true, false);
+                    columnSize = columnDivider.getDividerSize();
                 }
+                rect.set(columnSize, rowSize, 0, 0);
+            }
+        } else {
+            row = lookup.getSpanIndex(position, spanCount);
+            column = lookup.getSpanGroupIndex(position, spanCount);
+            totalSpanSize = getTotalSpanSizeByPosition(manager, position);
+            boolean drawColumn = isColumnNeedDraw(column, totalSpanSize, false, manager.getReverseLayout(),
+                    spanCount);
+            boolean drawRow;
+            if (drawColumn) {
+                IDivider columnDivider = createColumnDivider(column, false,
+                        manager.getReverseLayout());
+                columnSize = columnDivider.getDividerSize();
+            }
+            if (manager.getReverseLayout()) {
+                drawRow = isRowNeedDraw(row, totalSpanSize, false, true, spanCount);
+                if (drawRow) {
+                    IDivider rowDivider = createRowDivider(row, false, true);
+                    rowSize = rowDivider.getDividerSize();
+                }
+                rect.set(0, 0, columnSize, rowSize);
+            } else {
+                drawRow = isRowNeedDraw(row, totalSpanSize, false, false, spanCount);
+                if (drawRow) {
+                    IDivider rowDivider = createRowDivider(row, false, false);
+                    rowSize = rowDivider.getDividerSize();
+                }
+                rect.set(columnSize, rowSize, 0, 0);
             }
         }
-        if (mDrawInsideEachOfItem)
-            rect.set(0, 0, 0, 0);
-        mRelationships.put(position, relationship);
     }
 
     @Override
@@ -114,27 +105,28 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
         GridLayoutManager manager = (GridLayoutManager) layoutManager;
         int spanCount = manager.getSpanCount();
         int childCount = parent.getChildCount();
+        GridLayoutManager.SpanSizeLookup lookup = manager.getSpanSizeLookup();
         for (int i = 0; i < childCount; i++) {
             View view = parent.getChildAt(i);
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) view.getLayoutParams();
             int position = lp.getViewAdapterPosition();
             if (position < 0)
                 continue;
-            GridItemRelationship relationship = mRelationships.get(position);
-            if (relationship == null)
-                continue;
+            int row = lookup.getSpanGroupIndex(position, spanCount);
+            int column = lookup.getSpanIndex(position, spanCount);
+            int totalSpanSize = getTotalSpanSizeByPosition(manager, position);
             float transitionX = ViewCompat.getTranslationX(view);
             float transitionY = ViewCompat.getTranslationY(view);
-            boolean drawColumn = isColumnNeedDraw(relationship, true, manager.getReverseLayout(),
+            boolean drawColumn = isColumnNeedDraw(column, totalSpanSize, true, manager.getReverseLayout(),
                     spanCount);
-            boolean drawRow = isRowNeedDraw(relationship, true, manager.getReverseLayout(),
+            boolean drawRow = isRowNeedDraw(row, totalSpanSize, true, manager.getReverseLayout(),
                     spanCount);
             float left, top, right, bottom;
             if (drawColumn) {
                 top = view.getTop() - lp.topMargin + transitionY;
                 bottom = view.getBottom() + lp.bottomMargin + transitionY;
                 if (manager.getReverseLayout()) {
-                    IDivider columnDivider = createColumnDivider(relationship, true, true);
+                    IDivider columnDivider = createColumnDivider(column, true, true);
                     if (columnDivider.getType() == IDivider.TYPE_DRAWABLE) {
                         left = view.getRight() + lp.rightMargin + transitionX;
                         right = left + columnDivider.getDividerSize();
@@ -149,13 +141,13 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                     }
                     columnDivider.draw(c, left, top, right, bottom);
                     boolean needDrawLastRow = !mDrawInsideEachOfItem
-                            && relationship.totalSpanSize != spanCount
-                            && relationship.row > 1
-                            && mProvider.isRowNeedDraw(relationship.row - 1);
+                            && totalSpanSize != spanCount
+                            && row > 1
+                            && mProvider.isRowNeedDraw(row - 1);
                     if (needDrawLastRow) {
                         left = view.getRight() + lp.rightMargin + transitionX;
                         right = left + columnDivider.getDividerSize();
-                        IDivider rowDivider = mProvider.createRowDivider(relationship.row - 1);
+                        IDivider rowDivider = mProvider.createRowDivider(row - 1);
                         if (rowDivider.getType() == IDivider.TYPE_DRAWABLE) {
                             top = bottom;
                             bottom = top + rowDivider.getDividerSize();
@@ -166,7 +158,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         rowDivider.draw(c, left, top, right, bottom);
                     }
                 } else {
-                    IDivider columnDivider = createColumnDivider(relationship, true, false);
+                    IDivider columnDivider = createColumnDivider(column, true, false);
                     if (columnDivider.getType() == IDivider.TYPE_DRAWABLE) {
                         right = view.getLeft() - lp.leftMargin + transitionX;
                         left = right - columnDivider.getDividerSize();
@@ -181,13 +173,13 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                     }
                     columnDivider.draw(c, left, top, right, bottom);
                     boolean needDrawLastRow = !mDrawInsideEachOfItem
-                            && relationship.column > 0
-                            && relationship.row > 1
-                            && mProvider.isRowNeedDraw(relationship.row - 1);
+                            && column > 0
+                            && row > 1
+                            && mProvider.isRowNeedDraw(row - 1);
                     if (needDrawLastRow) {
                         right = view.getLeft() - lp.leftMargin + transitionX;
                         left = right - columnDivider.getDividerSize();
-                        IDivider rowDivider = mProvider.createRowDivider(relationship.row - 1);
+                        IDivider rowDivider = mProvider.createRowDivider(row - 1);
                         if (rowDivider.getType() == IDivider.TYPE_DRAWABLE) {
                             bottom = top;
                             top = top - rowDivider.getDividerSize();
@@ -200,7 +192,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                 }
             }
             if (drawRow) {
-                IDivider rowDivider = createRowDivider(relationship, true, manager.getReverseLayout());
+                IDivider rowDivider = createRowDivider(row, true, manager.getReverseLayout());
                 left = view.getLeft() - lp.leftMargin + transitionX;
                 right = view.getRight() + lp.rightMargin + transitionX;
                 if (manager.getReverseLayout()) {
@@ -242,24 +234,25 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
         GridLayoutManager manager = (GridLayoutManager) layoutManager;
         int spanCount = manager.getSpanCount();
         int childCount = parent.getChildCount();
+        GridLayoutManager.SpanSizeLookup lookup = manager.getSpanSizeLookup();
         for (int i = 0; i < childCount; i++) {
             View view = parent.getChildAt(i);
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) view.getLayoutParams();
             int position = lp.getViewAdapterPosition();
             if (position < 0)
                 continue;
-            GridItemRelationship relationship = mRelationships.get(position);
-            if (relationship == null)
-                continue;
+            int row = lookup.getSpanIndex(position, spanCount);
+            int column = lookup.getSpanGroupIndex(position, spanCount);
+            int totalSpanSize = getTotalSpanSizeByPosition(manager, position);
             float transitionX = ViewCompat.getTranslationX(view);
             float transitionY = ViewCompat.getTranslationY(view);
-            boolean drawColumn = isColumnNeedDraw(relationship, false, manager.getReverseLayout(),
+            boolean drawColumn = isColumnNeedDraw(column, totalSpanSize, false, manager.getReverseLayout(),
                     spanCount);
-            boolean drawRow = isRowNeedDraw(relationship, false, manager.getReverseLayout(),
+            boolean drawRow = isRowNeedDraw(row, totalSpanSize, false, manager.getReverseLayout(),
                     spanCount);
             float left, top, right, bottom;
             if (drawColumn) {
-                IDivider columnDivider = createColumnDivider(relationship, false,
+                IDivider columnDivider = createColumnDivider(column, false,
                         manager.getReverseLayout());
                 top = view.getTop() - lp.topMargin + transitionY;
                 bottom = view.getBottom() + lp.bottomMargin + transitionY;
@@ -293,7 +286,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                 columnDivider.draw(c, left, top, right, bottom);
             }
             if (drawRow) {
-                IDivider rowDivider = createRowDivider(relationship, false, manager
+                IDivider rowDivider = createRowDivider(row, false, manager
                         .getReverseLayout());
                 left = view.getLeft() - lp.leftMargin + transitionX;
                 right = view.getRight() + lp.rightMargin + transitionX;
@@ -312,13 +305,13 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                     }
                     rowDivider.draw(c, left, top, right, bottom);
                     boolean needDrawLastColumn = !mDrawInsideEachOfItem
-                            && relationship.column > 1
-                            && relationship.totalSpanSize != spanCount
-                            && mProvider.isColumnNeedDraw(relationship.column - 1);
+                            && column > 1
+                            && totalSpanSize != spanCount
+                            && mProvider.isColumnNeedDraw(column - 1);
                     if (needDrawLastColumn) {
                         top = view.getBottom() + lp.bottomMargin + transitionY;
                         bottom = top + rowDivider.getDividerSize();
-                        IDivider columnDivider = mProvider.createColumnDivider(relationship.column - 1);
+                        IDivider columnDivider = mProvider.createColumnDivider(column - 1);
                         if (columnDivider.getType() == IDivider.TYPE_DRAWABLE) {
                             left = right;
                             right = left + columnDivider.getDividerSize();
@@ -343,13 +336,13 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                     }
                     rowDivider.draw(c, left, top, right, bottom);
                     boolean needDrawLastColumn = !mDrawInsideEachOfItem
-                            && relationship.column > 0
-                            && relationship.row != spanCount
-                            && mProvider.isColumnNeedDraw(relationship.column - 1);
+                            && column > 0
+                            && row != spanCount
+                            && mProvider.isColumnNeedDraw(column - 1);
                     if (needDrawLastColumn) {
                         top = view.getTop() - lp.topMargin + transitionY;
                         bottom = top - rowDivider.getDividerSize();
-                        IDivider columnDivider = mProvider.createColumnDivider(relationship.column - 1);
+                        IDivider columnDivider = mProvider.createColumnDivider(column - 1);
                         if (columnDivider.getType() == IDivider.TYPE_DRAWABLE) {
                             right = left;
                             left = left - columnDivider.getDividerSize();
@@ -365,68 +358,65 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
         }
     }
 
-    @Override
-    public void release() {
-        super.release();
-        mRelationships.clear();
-    }
 
-    private IDivider createColumnDivider(GridItemRelationship relationship,
+    private IDivider createColumnDivider(int column,
                                          boolean vertical,
                                          boolean reverseLayout) {
         if (vertical) {
             if (reverseLayout)
-                return mProvider.createColumnDivider(relationship.column);
+                return mProvider.createColumnDivider(column);
             else
-                return mProvider.createColumnDivider(relationship.column - 1);
+                return mProvider.createColumnDivider(column - 1);
         } else {
-            return mProvider.createColumnDivider(relationship.column - 1);
+            return mProvider.createColumnDivider(column - 1);
         }
     }
 
-    private IDivider createRowDivider(GridItemRelationship relationship,
+    private IDivider createRowDivider(int row,
                                       boolean vertical,
                                       boolean reverseLayout) {
         if (vertical) {
-            return mProvider.createRowDivider(relationship.row - 1);
+            return mProvider.createRowDivider(row - 1);
         } else {
             if (reverseLayout) {
-                return mProvider.createRowDivider(relationship.row);
+                return mProvider.createRowDivider(row);
             } else {
-                return mProvider.createRowDivider(relationship.row - 1);
+                return mProvider.createRowDivider(row - 1);
             }
         }
     }
 
-    private boolean isColumnNeedDraw(GridItemRelationship relationship,
+    private boolean isColumnNeedDraw(int column,
+                                     int totalSpanSize,
                                      boolean vertical,
                                      boolean reverseLayout,
                                      int spanCount) {
         if (vertical) {
             if (reverseLayout)
-                return relationship.totalSpanSize != spanCount
-                        && mProvider.isColumnNeedDraw(relationship.column);
+                return totalSpanSize != spanCount
+                        && mProvider.isColumnNeedDraw(column);
             else
-                return relationship.column > 0
-                        && mProvider.isColumnNeedDraw(relationship.column - 1);
+                return column > 0
+                        && mProvider.isColumnNeedDraw(column - 1);
         } else {
-            return relationship.column > 0
-                    && mProvider.isColumnNeedDraw(relationship.column - 1);
+            return column > 0
+                    && mProvider.isColumnNeedDraw(column - 1);
         }
     }
 
-    private boolean isRowNeedDraw(GridItemRelationship relationship,
+    private boolean isRowNeedDraw(int row,
+                                  int totalSpanSize,
                                   boolean vertical,
                                   boolean reverseLayout,
                                   int spanCount) {
         if (vertical) {
-            return relationship.row > 0 && mProvider.isRowNeedDraw(relationship.row - 1);
+            return row > 0 && mProvider.isRowNeedDraw(row - 1);
         } else {
             if (reverseLayout) {
-                return relationship.totalSpanSize != spanCount
-                        && mProvider.isRowNeedDraw(relationship.row);
+                return totalSpanSize != spanCount
+                        && mProvider.isRowNeedDraw(row);
             } else {
-                return relationship.row > 0 && mProvider.isRowNeedDraw(relationship.row - 1);
+                return row > 0 && mProvider.isRowNeedDraw(row - 1);
             }
         }
     }
@@ -462,13 +452,6 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
         return spanTotalSize;
     }
 
-    private static class GridItemRelationship {
-        int position;
-        int row;
-        int column;
-        int totalSpanSize;
-    }
-
     public static class Builder extends BaseBuilder<IGridProvider, GridItemDecoration> {
 
         public Builder(@NonNull Context context) {
@@ -482,7 +465,5 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             }
             return new GridItemDecoration(this);
         }
-
-
     }
 }
