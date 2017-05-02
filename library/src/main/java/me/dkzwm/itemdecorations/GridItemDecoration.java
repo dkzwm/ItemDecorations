@@ -172,7 +172,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
                         left = right - columnDivider.getDividerSize();
                     } else {
                         left = view.getLeft() - lp.leftMargin + transitionX
-                                - Math.round(columnDivider.getDividerSize() / 2f);
+                                - columnDivider.getDividerSize() / 2f;
                         right = left;
                     }
                     if (mDrawInsideEachOfItem) {
