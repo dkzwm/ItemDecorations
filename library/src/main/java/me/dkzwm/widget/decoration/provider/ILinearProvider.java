@@ -1,6 +1,6 @@
-package me.dkzwm.itemdecorations.provider;
+package me.dkzwm.widget.decoration.provider;
 
-import me.dkzwm.itemdecorations.divider.IDivider;
+import me.dkzwm.widget.decoration.divider.IDivider;
 
 /**
  * Created by dkzwm on 2017/4/12.
@@ -15,5 +15,4 @@ public interface ILinearProvider extends IProvider {
     int marginStart(int position);
 
     int marginEnd(int position);
-
 }

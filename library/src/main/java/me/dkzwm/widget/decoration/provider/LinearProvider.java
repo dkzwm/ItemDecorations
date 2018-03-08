@@ -1,4 +1,4 @@
-package me.dkzwm.itemdecorations.provider;
+package me.dkzwm.widget.decoration.provider;
 
 /**
  * Created by dkzwm on 2017/4/13.

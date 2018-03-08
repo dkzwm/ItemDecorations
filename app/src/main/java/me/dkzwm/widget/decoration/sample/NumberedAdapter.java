@@ -1,6 +1,6 @@
-package me.dkzwm.itemdecorationsample;
+package me.dkzwm.widget.decoration.sample;
 
-import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +25,7 @@ public class NumberedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     };
 
-    public NumberedAdapter(LayoutInflater inflater, int count) {
+    NumberedAdapter(LayoutInflater inflater, int count) {
         mLabels = new ArrayList<>(count);
         for (int i = 0; i < count; ++i) {
             mLabels.add(String.valueOf(i));
@@ -34,7 +34,8 @@ public class NumberedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         int layoutResId = R.layout.item_one;
         RecyclerView.LayoutManager layoutManager = ((RecyclerView) parent).getLayoutManager();
         if (layoutManager instanceof LinearLayoutManager) {
@@ -48,7 +49,7 @@ public class NumberedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof TextViewHolder) {
             ((TextViewHolder) holder).setData(mLabels.get(position));
         }
@@ -65,7 +66,7 @@ public class NumberedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private TextViewHolder(View itemView) {
             super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.textView_item);
+            mTextView = itemView.findViewById(R.id.textView_item);
         }
 
         private void setData(String label) {

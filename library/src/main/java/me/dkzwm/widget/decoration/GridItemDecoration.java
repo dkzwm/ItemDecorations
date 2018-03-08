@@ -1,18 +1,17 @@
-package me.dkzwm.itemdecorations;
+package me.dkzwm.widget.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import me.dkzwm.itemdecorations.divider.IDivider;
-import me.dkzwm.itemdecorations.provider.DefaultGridProvider;
-import me.dkzwm.itemdecorations.provider.IGridProvider;
+import me.dkzwm.widget.decoration.divider.IDivider;
+import me.dkzwm.widget.decoration.provider.DefaultGridProvider;
+import me.dkzwm.widget.decoration.provider.IGridProvider;
 
 
 /**
@@ -22,7 +21,7 @@ import me.dkzwm.itemdecorations.provider.IGridProvider;
  */
 public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
 
-    private GridItemDecoration(Builder builder) {
+    private GridItemDecoration(BaseBuilder<IGridProvider, ?> builder) {
         super(builder);
     }
 
@@ -115,8 +114,8 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             int row = lookup.getSpanGroupIndex(position, spanCount);
             int column = lookup.getSpanIndex(position, spanCount);
             int totalSpanSize = getTotalSpanSizeByPosition(manager, position);
-            float transitionX = ViewCompat.getTranslationX(view);
-            float transitionY = ViewCompat.getTranslationY(view);
+            float transitionX = view.getTranslationX();
+            float transitionY = view.getTranslationY();
             boolean drawColumn = isColumnNeedDraw(column, totalSpanSize, true, manager.getReverseLayout(),
                     spanCount);
             boolean drawRow = isRowNeedDraw(row, totalSpanSize, true, manager.getReverseLayout(),
@@ -244,8 +243,8 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             int row = lookup.getSpanIndex(position, spanCount);
             int column = lookup.getSpanGroupIndex(position, spanCount);
             int totalSpanSize = getTotalSpanSizeByPosition(manager, position);
-            float transitionX = ViewCompat.getTranslationX(view);
-            float transitionY = ViewCompat.getTranslationY(view);
+            float transitionX = view.getTranslationX();
+            float transitionY = view.getTranslationY();
             boolean drawColumn = isColumnNeedDraw(column, totalSpanSize, false, manager.getReverseLayout(),
                     spanCount);
             boolean drawRow = isRowNeedDraw(row, totalSpanSize, false, manager.getReverseLayout(),
@@ -427,7 +426,7 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
      *
      * @param manager  The GridLayoutManager
      * @param position The position of Item
-     * @return
+     * @return The total span size
      */
     private int getTotalSpanSizeByPosition(GridLayoutManager manager, int position) {
         int spanTotalSize = 0;

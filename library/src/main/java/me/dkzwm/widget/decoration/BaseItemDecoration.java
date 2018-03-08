@@ -1,4 +1,4 @@
-package me.dkzwm.itemdecorations;
+package me.dkzwm.widget.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,7 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 
-import me.dkzwm.itemdecorations.provider.IProvider;
+import me.dkzwm.widget.decoration.provider.IProvider;
 
 /**
  * The base ItemDecoration

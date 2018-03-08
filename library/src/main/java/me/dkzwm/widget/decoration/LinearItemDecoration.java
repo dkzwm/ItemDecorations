@@ -1,18 +1,17 @@
-package me.dkzwm.itemdecorations;
+package me.dkzwm.widget.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import me.dkzwm.itemdecorations.divider.IDivider;
-import me.dkzwm.itemdecorations.provider.DefaultLinearProvider;
-import me.dkzwm.itemdecorations.provider.ILinearProvider;
+import me.dkzwm.widget.decoration.divider.IDivider;
+import me.dkzwm.widget.decoration.provider.DefaultLinearProvider;
+import me.dkzwm.widget.decoration.provider.ILinearProvider;
 
 /**
  * Created by dkzwm on 2017/4/13.
@@ -21,7 +20,7 @@ import me.dkzwm.itemdecorations.provider.ILinearProvider;
  */
 public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
 
-    private LinearItemDecoration(Builder builder) {
+    private LinearItemDecoration(BaseBuilder<ILinearProvider, ?> builder) {
         super(builder);
     }
 
@@ -80,8 +79,8 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
             int position = lp.getViewAdapterPosition();
             if (position < 0 || !mProvider.isDividerNeedDraw(position))
                 continue;
-            float transitionX = ViewCompat.getTranslationX(view);
-            float transitionY = ViewCompat.getTranslationY(view);
+            float transitionX = view.getTranslationX();
+            float transitionY = view.getTranslationY();
             left = view.getLeft() - lp.leftMargin + transitionX + mProvider.marginStart(position);
             right = view.getRight() + lp.rightMargin + transitionX - mProvider.marginEnd(position);
             IDivider divider = mProvider.createDivider(position);
@@ -126,8 +125,8 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
             int position = lp.getViewAdapterPosition();
             if (position < 0 || !mProvider.isDividerNeedDraw(position))
                 continue;
-            float transitionX = ViewCompat.getTranslationX(view);
-            float transitionY = ViewCompat.getTranslationY(view);
+            float transitionX = view.getTranslationX();
+            float transitionY = view.getTranslationY();
             top = view.getTop() - lp.topMargin + transitionY + mProvider.marginStart(position);
             bottom = view.getBottom() + lp.bottomMargin + transitionY - mProvider.marginEnd(position);
             IDivider divider = mProvider.createDivider(position);

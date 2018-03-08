@@ -1,4 +1,4 @@
-package me.dkzwm.itemdecorations.divider;
+package me.dkzwm.widget.decoration.divider;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

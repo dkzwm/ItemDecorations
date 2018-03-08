@@ -4,14 +4,14 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.dkzwm'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 14
+        targetSdkVersion 27
+        versionCode 3
+        versionName "1.0.2"
 
     }
     buildTypes {
@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compileOnly 'com.android.support:recyclerview-v7:27.1.0'
 }
 
 tasks.withType(JavaCompile) {
@@ -36,7 +36,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
-    failOnError  false
+    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile

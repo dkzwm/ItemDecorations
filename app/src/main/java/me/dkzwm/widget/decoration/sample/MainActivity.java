@@ -1,7 +1,6 @@
-package me.dkzwm.itemdecorationsample;
+package me.dkzwm.widget.decoration.sample;
 
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -12,18 +11,16 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.Random;
 
-import me.dkzwm.itemdecorations.GridItemDecoration;
-import me.dkzwm.itemdecorations.LinearItemDecoration;
-import me.dkzwm.itemdecorations.divider.ColorDivider;
-import me.dkzwm.itemdecorations.divider.DrawableDivider;
-import me.dkzwm.itemdecorations.divider.IDivider;
-import me.dkzwm.itemdecorations.divider.PaintDivider;
-import me.dkzwm.itemdecorations.provider.GridProvider;
-import me.dkzwm.itemdecorations.provider.LinearProvider;
+import me.dkzwm.widget.decoration.GridItemDecoration;
+import me.dkzwm.widget.decoration.LinearItemDecoration;
+import me.dkzwm.widget.decoration.divider.DrawableDivider;
+import me.dkzwm.widget.decoration.divider.IDivider;
+import me.dkzwm.widget.decoration.divider.PaintDivider;
+import me.dkzwm.widget.decoration.provider.GridProvider;
+import me.dkzwm.widget.decoration.provider.LinearProvider;
 
 public class MainActivity extends AppCompatActivity {
     private GridLayoutManager mGridLayoutManager;
@@ -42,37 +39,19 @@ public class MainActivity extends AppCompatActivity {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(5);
         mPaint.setColor(Color.RED);
-        mPaint.setPathEffect(new DashPathEffect(new float[]{15.0f, 15.0f}, 0));
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
+        mRecyclerView = findViewById(R.id.recyclerView_main);
         mAdapter = new NumberedAdapter(getLayoutInflater(), 100);
         mGridItemDecoration = new GridItemDecoration.Builder(this).provider(new GridProvider() {
             private IDivider mDividerOne = new PaintDivider(mPaint);
-            private IDivider mDividerTwo = new DrawableDivider(ContextCompat.getDrawable
-                    (MainActivity.this, R.drawable.shape_divider_green), true);
-            private IDivider mDividerThird = new ColorDivider(Color.BLUE, 4);
 
             @Override
             public IDivider createRowDivider(int row) {
-                switch ((row + 3) % 3) {
-                    case 0:
-                        return mDividerOne;
-                    case 1:
-                        return mDividerTwo;
-                    default:
-                        return mDividerThird;
-                }
+                return mDividerOne;
             }
 
             @Override
             public IDivider createColumnDivider(int column) {
-                switch ((column + 3) % 3) {
-                    case 0:
-                        return mDividerOne;
-                    case 1:
-                        return mDividerTwo;
-                    default:
-                        return mDividerThird;
-                }
+                return mDividerOne;
             }
         }).build();
         mLinearItemDecoration = new LinearItemDecoration.Builder(this).provider(new LinearProvider() {
@@ -126,9 +105,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            mRecyclerView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
     }
 
     @Override
@@ -162,9 +138,6 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerView.removeItemDecoration(mGridItemDecoration);
             mRecyclerView.addItemDecoration(mGridItemDecoration);
             mRecyclerView.setLayoutManager(mGridLayoutManager);
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                mRecyclerView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-            }
             mRecyclerView.setAdapter(mAdapter);
             return true;
         } else if (item.getItemId() == Menu.FIRST + 1) {
@@ -183,9 +156,6 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerView.removeItemDecoration(mLinearItemDecoration);
             mRecyclerView.addItemDecoration(mLinearItemDecoration);
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                mRecyclerView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            }
             mRecyclerView.setAdapter(mAdapter);
             return true;
         }
