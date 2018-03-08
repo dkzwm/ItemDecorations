@@ -5,13 +5,13 @@ ItemDecorations is a dividers library for RecyclerView which use GridLayoutManag
 <p/>
 
 ## Features
- 1.supports cross-column when the RecyclerView used GridLayoutManager  
- 2.supports horizontal orientation and vertical orientation  
- 3.supports reversed layout  
- 4.supports draw the divider inside each of item  
+ 1.Supports cross-column when the RecyclerView used GridLayoutManager  
+ 2.Supports horizontal orientation and vertical orientation  
+ 3.Supports reversed layout  
+ 4.Supports draw the divider inside each of item  
 
 ## How to use
- please see the sample application  
+ Please see the sample application  
  
 ## Gradle
 ```groovy
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {  
-    compile 'com.github.dkzwm:ItemDecorations:v1.0.1’
+    compile 'com.github.dkzwm:ItemDecorations:0.0.1’
 }
 ``` 
 ## Snapshot

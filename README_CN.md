@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {  
-    compile 'com.github.dkzwm:ItemDecorations:v1.0.1’
+    compile 'com.github.dkzwm:ItemDecorations:0.0.1’
 }
 ``` 
 ## 预览图
