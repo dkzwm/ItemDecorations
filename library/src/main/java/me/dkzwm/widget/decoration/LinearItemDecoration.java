@@ -20,7 +20,7 @@ import me.dkzwm.widget.decoration.provider.ILinearProvider;
  */
 public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
 
-    private LinearItemDecoration(BaseBuilder<ILinearProvider, ?> builder) {
+    private LinearItemDecoration(Builder builder) {
         super(builder);
     }
 
@@ -160,17 +160,91 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
     }
 
 
-    public static class Builder extends BaseBuilder<ILinearProvider, LinearItemDecoration> {
+    public static class Builder implements IBuilder<Builder, ILinearProvider> {
+        Context mContext;
+        ILinearProvider mProvider;
+        boolean mDrawInsideEachOfItem = false;
+        boolean mDrawOverTop = false;
 
         public Builder(@NonNull Context context) {
-            super(context);
+            mContext = context;
         }
 
         @Override
-        public LinearItemDecoration build() {
-            if (mProvider == null) {
-                mProvider = new DefaultLinearProvider();
+        public Builder drawOverTop(boolean drawOverTop) {
+            mDrawOverTop = drawOverTop;
+            return this;
+        }
+
+        @Override
+        public boolean isDrawOverTop() {
+            return mDrawOverTop;
+        }
+
+        @Override
+        public Builder drawInsideEachOfItem(boolean drawInsideEachOfItem) {
+            mDrawInsideEachOfItem = drawInsideEachOfItem;
+            return this;
+        }
+
+        @Override
+        public boolean isDrawInsideEachOfItem() {
+            return mDrawInsideEachOfItem;
+        }
+
+        @Override
+        public Builder provider(@NonNull ILinearProvider provider) {
+            if (mProvider != null) {
+                throw new IllegalArgumentException("You must set up the ILinearProvider before " +
+                        "configuring the custom rules");
             }
+            mProvider = provider;
+            return this;
+        }
+
+        @NonNull
+        @Override
+        public ILinearProvider getProvider() {
+            return mProvider;
+        }
+
+        public Builder divider(int position, IDivider divider) {
+            checkProvider();
+            ((DefaultLinearProvider) mProvider).setDivider(position, divider);
+            return this;
+        }
+
+        public Builder needDraw(int position, boolean need) {
+            checkProvider();
+            ((DefaultLinearProvider) mProvider).setDividerNeedDraw(position, need);
+            return this;
+        }
+
+        public Builder marginStart(int position, int margin) {
+            checkProvider();
+            ((DefaultLinearProvider) mProvider).setMarginStart(position, margin);
+            return this;
+        }
+
+        public Builder marginEnd(int position, int margin) {
+            checkProvider();
+            ((DefaultLinearProvider) mProvider).setMarginEnd(position, margin);
+            return this;
+        }
+
+        private void checkProvider() {
+            checkProviderIsNull();
+            if (!(mProvider instanceof DefaultLinearProvider))
+                mProvider = new DefaultLinearProvider(mProvider);
+        }
+
+        private void checkProviderIsNull() {
+            if (mProvider == null)
+                mProvider = new DefaultLinearProvider();
+        }
+
+        public LinearItemDecoration build() {
+            checkProviderIsNull();
             return new LinearItemDecoration(this);
         }
     }

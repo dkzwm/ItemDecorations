@@ -21,7 +21,7 @@ import me.dkzwm.widget.decoration.provider.IGridProvider;
  */
 public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
 
-    private GridItemDecoration(BaseBuilder<IGridProvider, ?> builder) {
+    private GridItemDecoration(Builder builder) {
         super(builder);
     }
 
@@ -451,17 +451,104 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
         return spanTotalSize;
     }
 
-    public static class Builder extends BaseBuilder<IGridProvider, GridItemDecoration> {
+    public static class Builder implements IBuilder<Builder, IGridProvider> {
+        Context mContext;
+        IGridProvider mProvider;
+        boolean mDrawInsideEachOfItem = false;
+        boolean mDrawOverTop = false;
 
         public Builder(@NonNull Context context) {
-            super(context);
+            mContext = context;
         }
 
         @Override
-        public GridItemDecoration build() {
-            if (mProvider == null) {
-                mProvider = new DefaultGridProvider();
+        public Builder drawOverTop(boolean overTop) {
+            mDrawOverTop = overTop;
+            return this;
+        }
+
+        @Override
+        public boolean isDrawOverTop() {
+            return mDrawOverTop;
+        }
+
+        @Override
+        public Builder drawInsideEachOfItem(boolean drawInsideEachOfItem) {
+            mDrawInsideEachOfItem = drawInsideEachOfItem;
+            return this;
+        }
+
+        @Override
+        public boolean isDrawInsideEachOfItem() {
+            return mDrawInsideEachOfItem;
+        }
+
+        @Override
+        public Builder provider(@NonNull IGridProvider provider) {
+            if (mProvider != null) {
+                throw new IllegalArgumentException("You must set up the IGridProvider before " +
+                        "configuring the custom rules");
             }
+            mProvider = provider;
+            return this;
+        }
+
+        @NonNull
+        @Override
+        public IGridProvider getProvider() {
+            return mProvider;
+        }
+
+        public Builder rowDivider(int row, IDivider divider) {
+            checkProvider();
+            ((DefaultGridProvider) mProvider).setRowDivider(row, divider);
+            return this;
+        }
+
+        public Builder rowDivider(IDivider divider) {
+            checkProvider();
+            ((DefaultGridProvider) mProvider).setAllRowDivider(divider);
+            return this;
+        }
+
+        public Builder columnDivider(int column, IDivider divider) {
+            checkProvider();
+            ((DefaultGridProvider) mProvider).setColumnDivider(column, divider);
+            return this;
+        }
+
+        public Builder columnDivider(IDivider divider) {
+            checkProvider();
+            ((DefaultGridProvider) mProvider).setAllColumnDivider(divider);
+            return this;
+        }
+
+        public Builder rowNeedDraw(int row, boolean need) {
+            checkProvider();
+            ((DefaultGridProvider) mProvider).setRowNeedDraw(row, need);
+            return this;
+        }
+
+        public Builder columnNeedDraw(int column, boolean need) {
+            checkProvider();
+            ((DefaultGridProvider) mProvider).setColumnNeedDraw(column, need);
+            return this;
+        }
+
+
+        private void checkProvider() {
+            checkProviderIsNull();
+            if (!(mProvider instanceof DefaultGridProvider))
+                mProvider = new DefaultGridProvider(mProvider);
+        }
+
+        private void checkProviderIsNull() {
+            if (mProvider == null)
+                mProvider = new DefaultGridProvider();
+        }
+
+        public GridItemDecoration build() {
+            checkProviderIsNull();
             return new GridItemDecoration(this);
         }
     }

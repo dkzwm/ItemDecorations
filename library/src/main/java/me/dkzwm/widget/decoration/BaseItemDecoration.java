@@ -1,6 +1,5 @@
 package me.dkzwm.widget.decoration;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -24,10 +23,10 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
     boolean mDrawInsideEachOfItem;
     private boolean mDrawOverTop;
 
-    BaseItemDecoration(BaseBuilder<T, ?> builder) {
-        mProvider = builder.mProvider;
-        mDrawOverTop = builder.mDrawOverTop;
-        mDrawInsideEachOfItem = builder.mDrawInsideEachOfItem;
+    BaseItemDecoration(IBuilder<?, T> builder) {
+        mProvider = builder.getProvider();
+        mDrawOverTop = builder.isDrawOverTop();
+        mDrawInsideEachOfItem = builder.isDrawInsideEachOfItem();
     }
 
     @Override
@@ -111,6 +110,9 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
          */
         R drawOverTop(boolean overTop);
 
+
+        boolean isDrawOverTop();
+
         /**
          * Draw the divider inside each of item
          *
@@ -118,6 +120,9 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
          * @return Builder
          */
         R drawInsideEachOfItem(boolean drawInsideEachOfItem);
+
+
+        boolean isDrawInsideEachOfItem();
 
         /**
          * Set the divider provider
@@ -127,37 +132,10 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
          */
         R provider(@NonNull S provider);
 
-    }
 
-    public abstract static class BaseBuilder<T, S> implements IBuilder<BaseBuilder, T> {
-        Context mContext;
-        T mProvider;
-        boolean mDrawInsideEachOfItem = false;
-        boolean mDrawOverTop = false;
-
-        BaseBuilder(@NonNull Context context) {
-            mContext = context;
-        }
-
-        @Override
-        public BaseBuilder<T, S> drawOverTop(boolean drawOverTop) {
-            mDrawOverTop = drawOverTop;
-            return this;
-        }
-
-        @Override
-        public BaseBuilder<T, S> drawInsideEachOfItem(boolean drawInsideEachOfItem) {
-            mDrawInsideEachOfItem = drawInsideEachOfItem;
-            return this;
-        }
-
-        @Override
-        public BaseBuilder<T, S> provider(@NonNull T provider) {
-            mProvider = provider;
-            return this;
-        }
-
-        abstract public S build();
+        @NonNull
+        S getProvider();
 
     }
+
 }
