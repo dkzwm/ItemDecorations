@@ -10,9 +10,6 @@ ItemDecorations is a dividers library for RecyclerView which use GridLayoutManag
  3.Support reversed layout  
  4.Support draw the divider inside each of item  
 
-## How to use
- Please see the sample application  
- 
 ## Gradle
 ```groovy
 repositories {  
@@ -21,9 +18,22 @@ repositories {
 }
 
 dependencies {  
-    compile 'com.github.dkzwm:ItemDecorations:0.0.1’
+    compile 'com.github.dkzwm:ItemDecorations:0.0.2’
 }
 ``` 
+
+## How to use
+```
+LinearItemDecoration linearItemDecoration = new LinearItemDecoration.Builder(context)
+          .divider(new ColorDivider()).marginStart(10).marginEnd(10)
+          .drawInsideEachOfItem(true).build();
+recyclerView.addItemDecoration(linearItemDecoration);
+
+GridItemDecoration gridItemDecoration = new GridItemDecoration.Builder(context)
+        .drawInsideEachOfItem(true).columnDivider(new ColorDivider(Color.BLACK))
+        .rowDivider(new ColorDivider(Color.BLACK)).build();
+recyclerView.addItemDecoration(gridItemDecoration);
+```
 ## Snapshot
 <p>
 <img src="snapshot1.png" alt="Drawing" width="280" />

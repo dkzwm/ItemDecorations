@@ -21,8 +21,4 @@ public abstract class LinearProvider implements ILinearProvider {
         return 0;
     }
 
-    @Override
-    public void release() {
-
-    }
 }

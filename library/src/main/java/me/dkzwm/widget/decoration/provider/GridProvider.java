@@ -16,8 +16,4 @@ public abstract class GridProvider implements IGridProvider {
         return true;
     }
 
-    @Override
-    public void release() {
-
-    }
 }

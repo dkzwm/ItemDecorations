@@ -1,5 +1,6 @@
 package me.dkzwm.widget.decoration.provider;
 
+import android.support.annotation.NonNull;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 
@@ -12,75 +13,91 @@ import me.dkzwm.widget.decoration.divider.IDivider;
  * @author dkzwm
  */
 public final class DefaultGridProvider implements IGridProvider {
-    private SparseArray<IDivider> mRowDividers = new SparseArray<>();
-    private SparseArray<IDivider> mColumnDividers = new SparseArray<>();
-    private SparseBooleanArray mRowNeedDrawFlags = new SparseBooleanArray();
-    private SparseBooleanArray mColumnNeedDrawFlags = new SparseBooleanArray();
-    private IDivider mAllRowDivider = new ColorDivider();
-    private IDivider mAllColumnDivider = new ColorDivider();
+    private SparseArray<IDivider> mRowDividers;
+    private SparseArray<IDivider> mColumnDividers;
+    private SparseBooleanArray mRowNeedDrawFlags;
+    private SparseBooleanArray mColumnNeedDrawFlags;
+    private IDivider mDefaultDivider = new ColorDivider();
+    private IDivider mAllRowDivider;
+    private IDivider mAllColumnDivider;
     private IGridProvider mProvider;
 
     public DefaultGridProvider() {
     }
 
-    public DefaultGridProvider(IGridProvider provider) {
+    public DefaultGridProvider(@NonNull IGridProvider provider) {
         mProvider = provider;
     }
 
-    public void setAllRowDivider(IDivider allRowDivider) {
+    public void setAllRowDivider(@NonNull IDivider allRowDivider) {
         mAllRowDivider = allRowDivider;
     }
 
-    public void setAllColumnDivider(IDivider allColumnDivider) {
+    public void setAllColumnDivider(@NonNull IDivider allColumnDivider) {
         mAllColumnDivider = allColumnDivider;
     }
 
-    public void setRowDivider(int row, IDivider divider) {
+    public void setRowDivider(int row, @NonNull IDivider divider) {
+        if (mRowDividers == null)
+            mRowDividers = new SparseArray<>();
         mRowDividers.put(row, divider);
     }
 
     @Override
     public IDivider createRowDivider(int row) {
-        final IDivider rowDivider = mRowDividers.get(row);
-        return rowDivider == null ? mProvider == null
-                ? mAllRowDivider : mProvider.createRowDivider(row) : rowDivider;
+        final IDivider rowDivider = mRowDividers == null ? null : mRowDividers.get(row);
+        return rowDivider == null ? mAllRowDivider == null ? mProvider == null ?
+                mDefaultDivider : mProvider.createRowDivider(row) : mAllRowDivider : rowDivider;
     }
 
     public void setColumnDivider(int row, IDivider divider) {
+        if (mColumnDividers == null)
+            mColumnDividers = new SparseArray<>();
         mColumnDividers.put(row, divider);
     }
 
     @Override
     public IDivider createColumnDivider(int column) {
-        final IDivider columnDivider = mColumnDividers.get(column);
-        return columnDivider == null ? mProvider == null
-                ? mAllColumnDivider : mProvider.createColumnDivider(column) : columnDivider;
+        final IDivider columnDivider = mColumnDividers == null ? null : mColumnDividers.get(column);
+        return columnDivider == null ? mAllColumnDivider == null ? mProvider == null ?
+                mDefaultDivider : mProvider.createColumnDivider(column) : mAllColumnDivider :
+                columnDivider;
     }
 
     public void setRowNeedDraw(int row, boolean need) {
+        if (mRowNeedDrawFlags == null)
+            mRowNeedDrawFlags = new SparseBooleanArray();
         mRowNeedDrawFlags.put(row, need);
     }
 
     @Override
     public boolean isRowNeedDraw(int row) {
-        return mRowNeedDrawFlags.get(row, true);
+        return mRowNeedDrawFlags == null ? mProvider == null || mProvider.isRowNeedDraw(row) :
+                mRowNeedDrawFlags.get(row, true);
     }
 
     public void setColumnNeedDraw(int column, boolean need) {
+        if (mColumnNeedDrawFlags == null)
+            mColumnNeedDrawFlags = new SparseBooleanArray();
         mColumnNeedDrawFlags.put(column, need);
     }
 
     @Override
     public boolean isColumnNeedDraw(int column) {
-        return mColumnNeedDrawFlags.get(column, true);
+        return mColumnNeedDrawFlags == null ? mProvider == null || mProvider.isColumnNeedDraw(column) :
+                mColumnNeedDrawFlags.get(column, true);
     }
 
     @Override
     public void release() {
-        mRowDividers.clear();
-        mColumnDividers.clear();
-        mRowNeedDrawFlags.clear();
-        mColumnNeedDrawFlags.clear();
+        if (mRowDividers != null)
+            mRowDividers.clear();
+        if (mColumnDividers != null)
+            mColumnDividers.clear();
+        if (mRowNeedDrawFlags != null)
+            mRowNeedDrawFlags.clear();
+        if (mColumnNeedDrawFlags != null)
+            mColumnNeedDrawFlags.clear();
         mProvider = null;
         mAllColumnDivider = null;
         mAllRowDivider = null;

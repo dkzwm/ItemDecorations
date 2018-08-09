@@ -53,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
             public IDivider createColumnDivider(int column) {
                 return mDividerOne;
             }
+
+            @Override
+            public void release() {
+                mDividerOne = null;
+            }
         }).build();
         mLinearItemDecoration = new LinearItemDecoration.Builder(this).provider(new LinearProvider() {
             private IDivider mDividerOne = new DrawableDivider(ContextCompat.getDrawable
@@ -87,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
                     return 62;
                 }
                 return 0;
+            }
+
+            @Override
+            public void release() {
+                mDividerOne = null;
+                mDividerTwo = null;
+                mDividerThird = null;
             }
         }).drawInsideEachOfItem(true).build();
         mGridLayoutManager = new GridLayoutManager(this, 4);

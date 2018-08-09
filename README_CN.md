@@ -10,9 +10,6 @@ ItemDecorations是RecyclerView的分隔线库，现阶段支持使用GridLayoutM
  2.支持横向和纵向布局  
  3.支持倒序(Reversed)  
  4.支持分割线画在每个视图内部  
-
-## 如何使用
- 请参照示例Demo,使用很简单
  
 ## Gradle
 ```groovy
@@ -22,9 +19,23 @@ repositories {
 }
 
 dependencies {  
-    compile 'com.github.dkzwm:ItemDecorations:0.0.1’
+    compile 'com.github.dkzwm:ItemDecorations:0.0.2’
 }
 ``` 
+
+## 如何使用
+```
+\\线性布局
+LinearItemDecoration linearItemDecoration = new LinearItemDecoration.Builder(this)
+          .divider(new ColorDivider()).drawOverTop(false).marginEnd(10)
+          .drawInsideEachOfItem(true).build();
+recyclerView.addItemDecoration(linearItemDecoration);
+\\网格布局
+GridItemDecoration gridItemDecoration = new GridItemDecoration.Builder(this)
+        .drawInsideEachOfItem(true).columnDivider(new ColorDivider(Color.BLACK))
+        .rowDivider(new ColorDivider(Color.BLACK)).build();
+recyclerView.addItemDecoration(gridItemDecoration);
+```
 ## 预览图
 <p>
 <img src="snapshot1.png" alt="Drawing" width="280" />

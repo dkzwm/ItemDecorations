@@ -214,15 +214,33 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
             return this;
         }
 
+        public Builder divider(IDivider divider) {
+            checkProvider();
+            ((DefaultLinearProvider) mProvider).setAllDivider(divider);
+            return this;
+        }
+
         public Builder needDraw(int position, boolean need) {
             checkProvider();
             ((DefaultLinearProvider) mProvider).setDividerNeedDraw(position, need);
             return this;
         }
 
+        public Builder marginStart(int margin) {
+            checkProvider();
+            ((DefaultLinearProvider) mProvider).setAllMarginStart(margin);
+            return this;
+        }
+
         public Builder marginStart(int position, int margin) {
             checkProvider();
             ((DefaultLinearProvider) mProvider).setMarginStart(position, margin);
+            return this;
+        }
+
+        public Builder marginEnd(int margin) {
+            checkProvider();
+            ((DefaultLinearProvider) mProvider).setAllMarginEnd(margin);
             return this;
         }
 
