@@ -22,7 +22,9 @@ import me.dkzwm.widget.decoration.provider.IGridProvider;
 public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
 
     private GridItemDecoration(Builder builder) {
-        super(builder);
+        mDrawInsideEachOfItem = builder.mDrawInsideEachOfItem;
+        mDrawOverTop = builder.mDrawOverTop;
+        mProvider = builder.mProvider;
     }
 
     @Override
@@ -468,19 +470,9 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
         }
 
         @Override
-        public boolean isDrawOverTop() {
-            return mDrawOverTop;
-        }
-
-        @Override
         public Builder drawInsideEachOfItem(boolean drawInsideEachOfItem) {
             mDrawInsideEachOfItem = drawInsideEachOfItem;
             return this;
-        }
-
-        @Override
-        public boolean isDrawInsideEachOfItem() {
-            return mDrawInsideEachOfItem;
         }
 
         @Override
@@ -491,12 +483,6 @@ public class GridItemDecoration extends BaseItemDecoration<IGridProvider> {
             }
             mProvider = provider;
             return this;
-        }
-
-        @NonNull
-        @Override
-        public IGridProvider getProvider() {
-            return mProvider;
         }
 
         public Builder rowDivider(int row, IDivider divider) {

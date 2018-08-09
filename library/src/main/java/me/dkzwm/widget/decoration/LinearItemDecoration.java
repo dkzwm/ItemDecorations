@@ -21,7 +21,9 @@ import me.dkzwm.widget.decoration.provider.ILinearProvider;
 public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
 
     private LinearItemDecoration(Builder builder) {
-        super(builder);
+        mDrawInsideEachOfItem = builder.mDrawInsideEachOfItem;
+        mDrawOverTop = builder.mDrawOverTop;
+        mProvider = builder.mProvider;
     }
 
     @Override
@@ -177,19 +179,9 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
         }
 
         @Override
-        public boolean isDrawOverTop() {
-            return mDrawOverTop;
-        }
-
-        @Override
         public Builder drawInsideEachOfItem(boolean drawInsideEachOfItem) {
             mDrawInsideEachOfItem = drawInsideEachOfItem;
             return this;
-        }
-
-        @Override
-        public boolean isDrawInsideEachOfItem() {
-            return mDrawInsideEachOfItem;
         }
 
         @Override
@@ -200,12 +192,6 @@ public class LinearItemDecoration extends BaseItemDecoration<ILinearProvider> {
             }
             mProvider = provider;
             return this;
-        }
-
-        @NonNull
-        @Override
-        public ILinearProvider getProvider() {
-            return mProvider;
         }
 
         public Builder divider(int position, IDivider divider) {

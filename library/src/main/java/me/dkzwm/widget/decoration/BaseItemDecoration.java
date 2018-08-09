@@ -19,15 +19,11 @@ import me.dkzwm.widget.decoration.provider.IProvider;
  * @author dkzwm
  */
 abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.ItemDecoration {
+    @NonNull
     T mProvider;
     boolean mDrawInsideEachOfItem;
-    private boolean mDrawOverTop;
+    boolean mDrawOverTop;
 
-    BaseItemDecoration(IBuilder<?, T> builder) {
-        mProvider = builder.getProvider();
-        mDrawOverTop = builder.isDrawOverTop();
-        mDrawInsideEachOfItem = builder.isDrawInsideEachOfItem();
-    }
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
@@ -110,9 +106,6 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
          */
         R drawOverTop(boolean overTop);
 
-
-        boolean isDrawOverTop();
-
         /**
          * Draw the divider inside each of item
          *
@@ -121,9 +114,6 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
          */
         R drawInsideEachOfItem(boolean drawInsideEachOfItem);
 
-
-        boolean isDrawInsideEachOfItem();
-
         /**
          * Set the divider provider
          *
@@ -131,11 +121,6 @@ abstract class BaseItemDecoration<T extends IProvider> extends RecyclerView.Item
          * @return Builder
          */
         R provider(@NonNull S provider);
-
-
-        @NonNull
-        S getProvider();
-
     }
 
 }
